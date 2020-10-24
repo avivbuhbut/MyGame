@@ -13,7 +13,7 @@ public class gunRotation : MonoBehaviour
     {
 
 
-        GameObject cameraObject = GameObject.Find("Camera1"); // change for the name of the tag of the camera
+        GameObject cameraObject = GameObject.Find("Camera1"); // change for the name of the tag of the camera (only in case iv created a a new camera different from the original one)
         myCamera = cameraObject.GetComponent<Camera>();
         Vector2 mousePosition =
                         new Vector2(myCamera.ScreenToWorldPoint(Input.mousePosition).x,

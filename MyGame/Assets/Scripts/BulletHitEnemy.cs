@@ -19,7 +19,7 @@ public class BulletHitEnemy : MonoBehaviour
     void OnTriggerEnter2D(Collider2D colisor)
     {
         Debug.Log("Okay");
-        if (colisor.gameObject.tag == "Bullet1")
+        if (colisor.gameObject.tag == "Enemy")
         {
             Destroy(colisor.gameObject);
  

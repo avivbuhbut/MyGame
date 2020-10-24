@@ -8,16 +8,18 @@ public class Enemy2move : Enemies2
     public int _attackDamage;
     public int _lifePoints;
     public float _attackRadius;
-
+    public Animator animator;
     //movement
     public float _followRadius;
     //end
     [SerializeField] Transform playerTransform;
  
     SpriteRenderer enemySR;
-
+    float horizontalMove = 0f;
     void Start()
     {
+
+         animator = playerTransform.gameObject.GetComponent<Animator>();
         //get the player transform   
         playerTransform = GameObject.FindWithTag("Player").GetComponent<Transform>();
         //enemy animation and sprite renderer 
@@ -34,10 +36,23 @@ public class Enemy2move : Enemies2
     // Update is called once per frame
     void Update()
     {
+
+
+        //
+        horizontalMove = Input.GetAxisRaw("Horizontal") * Mathf.Abs(_moveSpeed);
+         animator.SetFloat("Speed", Mathf.Abs(horizontalMove));
+
+
+
+      //  if ((Mathf.Abs(playerTransform.position.x - transform.position.x) > 2)) // if the player is not moving 
+       //     animator.SetBool("Walking", true);
+
         if (checkFollowRadius(playerTransform.position.x, transform.position.x))
         {
+
+           
             //if player in front of the enemies
-            if (playerTransform.position.x < transform.position.x)
+            if (playerTransform.position.x < transform.position.x )
             {
 
                 if (checkAttackRadius(playerTransform.position.x, transform.position.x))
@@ -47,18 +62,21 @@ public class Enemy2move : Enemies2
                 }
                 else
                 {
-                    this.transform.position += new Vector3(-getMoveSpeed() * Time.deltaTime, 0f, 0f);
-                    //for attack animation
-                
+
+                    if (playerTransform.position.x < transform.position.x && (playerTransform.position.x) - (transform.position.x) < 3)
+                        this.transform.position += new Vector3(-getMoveSpeed() * Time.deltaTime, 0f, 0f);  // moving left
+                                                                                                      //for attack animation
+
                     //walk
-           
-                    enemySR.flipX = true;
+                     enemySR.flipX = true; //flips e
                 }
 
             }
             //if player is behind enemies
-            else if (playerTransform.position.x > transform.position.x)
+            else if ((playerTransform.position.x > transform.position.x ) && (playerTransform.position.x) - (transform.position.x) > 3) //
             {
+
+                
                 if (checkAttackRadius(playerTransform.position.x, transform.position.x))
                 {
                     //for attack animation
@@ -66,7 +84,7 @@ public class Enemy2move : Enemies2
                 }
                 else
                 {
-                    this.transform.position += new Vector3(getMoveSpeed() * Time.deltaTime, 0f, 0f);
+                    this.transform.position += new Vector3(getMoveSpeed() * Time.deltaTime, 0f, 0f); // moving right
                     //for attack animation
                  
                     //walk
