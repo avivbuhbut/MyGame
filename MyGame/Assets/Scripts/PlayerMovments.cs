@@ -15,27 +15,34 @@ public class PlayerMovments : MonoBehaviour
     public float moveSpeed = 5f;
     //public float hitPoints = 100f;
     private Rigidbody2D rb;
+    public Animator animator;
+
+    float horizontalMove = 0f;
+
+    [SerializeField] Transform playerTransform;
 
 
- 
-
-    
 
 
-    
+
+
 
 
     void Awake()
     {
         rigidbody2d = GetComponent<Rigidbody2D>();
+        animator = this.gameObject.GetComponent<Animator>();
     }
 
 
         void FixedUpdate()
         {
 
-            //Moving Left And RIgh
-            if (Input.GetKey(KeyCode.A))
+        horizontalMove = Input.GetAxisRaw("Horizontal") * Mathf.Abs(speed);
+        animator.SetFloat("Speed", Mathf.Abs(horizontalMove));
+
+        //Moving Left And RIgh
+        if (Input.GetKey(KeyCode.A))
                 rigidbody2d.velocity = new Vector2(speed * -1, rigidbody2d.velocity.y);
             if (Input.GetKey(KeyCode.D))
                 rigidbody2d.velocity = new Vector2(speed, rigidbody2d.velocity.y);
